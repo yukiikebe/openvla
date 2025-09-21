@@ -26,6 +26,7 @@ from typing import Optional, Union
 import draccus
 import numpy as np
 import tqdm
+sys.path.append("LIBERO")  
 from libero.libero import benchmark
 
 import wandb
@@ -70,7 +71,7 @@ class GenerateConfig:
     #################################################################################################################
     task_suite_name: str = "libero_spatial"          # Task suite. Options: libero_spatial, libero_object, libero_goal, libero_10, libero_90
     num_steps_wait: int = 10                         # Number of steps to wait for objects to stabilize in sim
-    num_trials_per_task: int = 50                    # Number of rollouts per task
+    num_trials_per_task: int = 20                    # Number of rollouts per task
 
     #################################################################################################################
     # Utils
@@ -82,7 +83,7 @@ class GenerateConfig:
     wandb_project: str = "YOUR_WANDB_PROJECT"        # Name of W&B project to log to (use default!)
     wandb_entity: str = "YOUR_WANDB_ENTITY"          # Name of entity to log under
 
-    seed: int = 7                                    # Random Seed (for reproducibility)
+    seed: int = 3                                    # Random Seed (for reproducibility)
 
     # fmt: on
 

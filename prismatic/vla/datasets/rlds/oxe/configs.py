@@ -670,4 +670,18 @@ OXE_DATASET_CONFIGS = {
         "state_encoding": StateEncoding.POS_EULER,
         "action_encoding": ActionEncoding.EEF_POS,
     },
+    "real_ur10e": {
+        "image_obs_keys": {"primary": "image", "secondary": None, "wrist": "wrist_image"},
+        "depth_obs_keys": {"primary": None, "secondary": None, "wrist": None},
+        "state_obs_keys": ["joint_state", None, "gripper_state"],
+        "state_encoding": StateEncoding.JOINT,
+        "action_encoding": ActionEncoding.EEF_POS,
+    },
+    "ur10e_rlds": {
+        "image_obs_keys": {"primary": "image", "secondary": None, "wrist": "wrist_image"},
+        "depth_obs_keys": {"primary": None, "secondary": None, "wrist": None},
+        "state_obs_keys": ["joint_state", None, "gripper_state"],
+        "state_encoding": StateEncoding.JOINT,
+        "action_encoding": ActionEncoding.EEF_POS,
+    },
 }

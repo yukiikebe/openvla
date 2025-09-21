@@ -85,7 +85,6 @@ def bridge_orig_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     trajectory["observation"]["gripper_state"] = trajectory["observation"]["state"][:, -1:]
     return trajectory
 
-
 def ppgm_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     trajectory["action"] = tf.concat(
         [
@@ -840,9 +839,22 @@ def libero_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     trajectory["observation"]["gripper_state"] = trajectory["observation"]["state"][:, -2:]  # 2D gripper state
     return trajectory
 
+def ur10e_lerobot_dataset_transform(trajectory, config=None):
+    steps = trajectory["steps"] if "steps" in trajectory else trajectory
+    obs = steps["observation"]     
+    print(f"obs keys: {list(obs.keys())}")   
+
+    states = tf.cast(obs["state"], tf.float32)
+    obs["joint_state"]   = states[..., :6]
+    obs["gripper_state"] = states[..., -1:]
+    pad = tf.zeros_like(obs["joint_state"][..., :1])
+    steps["state"] = tf.concat([obs["joint_state"], pad, obs["gripper_state"]], axis=-1)
+    # print("trajectory['state'] shape:", steps["state"].shape)
+    return trajectory
 
 # === Registry ===
 OXE_STANDARDIZATION_TRANSFORMS = {
+    "libero_rlds":libero_dataset_transform,
     "bridge_oxe": bridge_oxe_dataset_transform,
     "bridge_orig": bridge_orig_dataset_transform,
     "bridge_dataset": bridge_orig_dataset_transform,
@@ -919,4 +931,7 @@ OXE_STANDARDIZATION_TRANSFORMS = {
     "libero_object_no_noops": libero_dataset_transform,
     "libero_goal_no_noops": libero_dataset_transform,
     "libero_10_no_noops": libero_dataset_transform,
+    "libero_10": libero_dataset_transform,   
+    "real_ur10e": ur10e_lerobot_dataset_transform,
+    "ur10e_rlds": ur10e_lerobot_dataset_transform,
 }

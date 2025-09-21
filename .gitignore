@@ -151,3 +151,10 @@ data/
 # Rollout videos and wandb logs
 rollouts/
 wandb/
+
+rlds*
+runs
+tmp_adapters
+openvla-7b+real_ur10e+b8+lr-0.0005+lora-r32+dropout-0.0
+debug
+experiments/robot/libero/experiments/

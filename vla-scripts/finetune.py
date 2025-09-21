@@ -359,6 +359,8 @@ def finetune(cfg: FinetuneConfig) -> None:
                             merged_vla.save_pretrained(checkpoint_dir)
 
                             print(f"Saved Model Checkpoint for Step {gradient_step_idx} at: {checkpoint_dir}")
+                        del base_vla, merged_vla
+                        import gc; gc.collect()
 
                 # Block on Main Process Checkpointing
                 dist.barrier()
